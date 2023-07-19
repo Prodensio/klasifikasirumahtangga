@@ -1,0 +1,156 @@
+from django import forms
+from .models import SurveyPenduduk, SurveyRumahTangga
+
+
+
+# create your forms here
+class FormSurveyPenduduk(forms.ModelForm):
+    class Meta:
+        model = SurveyPenduduk
+        fields = [
+            'dusun',
+            'rt',
+            'no_rumah_tangga',
+            'no_kartu_keluarga',
+            'no_induk_kependudukan',
+            'nama_penduduk',
+            'jenis_kelamin',
+            'tempat_lahir',
+            'tanggal_lahir',
+            'alamat',
+            'status_pernikahan',
+            'agama',
+            'no_hp',
+            'pekerjaan',
+            'penghasilan',
+            'pendidikan',
+            'hubungan_dalam_keluarga',
+        ]
+        labels = {
+            'dusun' : 'DUSUN',
+            'rt' : 'RT',
+            'no_rumah_tangga' : 'NO RUMAH TANGGA',
+            'no_kartu_keluarga' : 'NO KARTU KELUARGA',
+            'no_induk_kependudukan': 'NO INDUK KEPENDUDUKAN',
+            'nama_penduduk': 'NAMA PENDUDUK',
+            'jenis_kelamin': 'JENIS KELAMIN',
+            'tempat_lahir': 'TEMPAT LAHIR',
+            'tanggal_lahir': 'TANGGAL LAHIR',
+            'alamat': 'ALAMAT',
+            'status_pernikahan': 'STATUS PERNIKAHAN',
+            'agama': 'AGAMA',
+            'no_hp': 'NO HP',
+            'pekerjaan': 'PEKERJAAN',
+            'penghasilan': 'PENGHASILAN',
+            'pendidikan': 'PENDIDIKAN',
+            'hubungan_dalam_keluarga': 'HUBUNGAN DALAM KELUARGA',
+        }
+        widgets = {
+            'dusun' : forms.Select(attrs={'class': 'form-control'}),
+            'rt' : forms.Select(attrs={'class': 'form-control'}),
+            'no_rumah_tangga' : forms.NumberInput(attrs={'class': 'form-control'}),
+            'no_kartu_keluarga' : forms.NumberInput(attrs={'class': 'form-control'}),
+            'no_induk_kependudukan': forms.NumberInput(attrs={'class': 'form-control'}),
+            'nama_penduduk': forms.TextInput(attrs={'class': 'form-control'}),
+            'jenis_kelamin': forms.Select(attrs={'class': 'form-control'}),
+            'tempat_lahir': forms.TextInput(attrs={'class': 'form-control'}),
+            'tanggal_lahir': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'alamat' : forms.TextInput(attrs={'class': 'form-control'}) ,
+            'status_pernikahan': forms.Select(attrs={'class': 'form-control'}),
+            'agama': forms.Select(attrs={'class': 'form-control'}),
+            'no_hp': forms.NumberInput(attrs={'class': 'form-control'}),
+            'pekerjaan': forms.Select(attrs={'class': 'form-control'}),
+            'penghasilan': forms.NumberInput(attrs={'class': 'form-control'}),
+            'pendidikan': forms.Select(attrs={'class': 'form-control'}),
+            'hubungan_dalam_keluarga': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+
+
+# Form Rumah Tangga
+class FormSurveyRumahTangga(forms.ModelForm):
+    class Meta:
+        model = SurveyRumahTangga
+        fields = [
+            'dusun',
+            'rt',
+            'no_rumah_tangga',
+            'no_kartu_keluarga',
+            'kepala_rumah_tangga',
+            'nik_kepala_rumah_tangga',
+            'pekerjaan_kepala_rumah_tangga',
+            'penghasilan_kepala_rumah_tangga',
+            'pendidikan_kepala_rumah_tangga',
+            'alamat_rumah_tangga',
+            'jumlah_anggota_rumah_tangga',
+            'status_kepemilikan_tempat_tinggal', 
+            'luas_lantai_tempat_tinggal',
+            'jenis_lantai_tempat_tinggal', 
+            'jenis_dinding_tempat_tinggal', 
+            'jenis_atap_tempat_tinggal', 
+            'fasilitas_buang_air_besar', 
+            'sumber_penerangan_rumah', 
+            'bahan_bakar_untuk_memasak',
+            'jumlah_konsumsi_daging_susu_ayam_dalam_seminggu', 
+            'jumlah_membeli_pakaian_baru_dalam_setahun', 
+            'jumlah_makan_dalam_sehari', 
+            'mampu_membayar_biaya_pengobatan',
+            'sumber_air_minum', 
+            'memiliki_simpanan_aset', 
+        ]
+        labels = {
+            'dusun' : 'DUSUN',
+            'rt' : 'RT',
+            'no_rumah_tangga': 'NO RUMAH TANGGA',
+            'no_kartu_keluarga': 'NO KARTU KELUARGA',
+            'kepala_rumah_tangga': 'KEPALA RUMAH TANGGA',
+            'nik_kepala_rumah_tangga': 'NIK KEPALA RUMAH TANGGA',
+            'pekerjaan_kepala_rumah_tangga' : 'PEKERJAAN KEPALA RUMAH TANGGA',
+            'penghasilan_kepala_rumah_tangga' : 'PENGHASILAN KEPALA RUMAH TANGGA',
+            'pendidikan_kepala_rumah_tangga' : 'PENDIDIKAN KEPALA RUMAH TANGGA',
+            'alamat_rumah_tangga' : 'ALAMAT RUMAH TANGGA',
+            'jumlah_anggota_rumah_tangga' : 'JUMLAH ANGGOTA RUMAH TANGGA',
+            'status_kepemilikan_tempat_tinggal': 'STATUS KEPEMILIKAN TEMPAT TINGGAL', 
+            'luas_lantai_tempat_tinggal': 'LUAS LANTAI TEMPAT TINGGAL (M2)',
+            'jenis_lantai_tempat_tinggal': 'JENIS LANTAI TEMPAT TINGGAL', 
+            'jenis_dinding_tempat_tinggal': 'JENIS DINDING TEMPAT TINGGAL', 
+            'jenis_atap_tempat_tinggal': 'JENIS ATAP TEMPAT TINGGAL', 
+            'fasilitas_buang_air_besar': 'FASILITAS BAB', 
+            'sumber_penerangan_rumah': 'SUMBER PENERANGAN RUMAH', 
+            'bahan_bakar_untuk_memasak': 'BAHAN BAKAR UNTUK MEMASAK',
+            'jumlah_konsumsi_daging_susu_ayam_dalam_seminggu': 'JUMLAH KONSUMSI DAGING SUSU AYAM DALAM SEMINGGU', 
+            'jumlah_membeli_pakaian_baru_dalam_setahun': 'JUMLAH MEMBELI PAKAIAN BARU DALAM SETAHUN', 
+            'jumlah_makan_dalam_sehari': 'JUMLAH MAKAN DALAM SEHARI', 
+            'mampu_membayar_biaya_pengobatan': 'MAMPU MEMBAYAR BIAYA PENGOBATAN',
+            'sumber_air_minum': 'SUMBER AIR MINUM RUMAH TANGGA', 
+            'memiliki_simpanan_aset': 'MEMILIKI SIMPANAN ASET', 
+        }
+        widgets = {
+            'dusun' : forms.Select(attrs={'class': 'form-control'}),
+            'rt' : forms.Select(attrs={'class': 'form-control'}),
+            'no_rumah_tangga': forms.NumberInput(attrs={'class': 'form-control'}),
+            'no_kartu_keluarga': forms.NumberInput(attrs={'class': 'form-control'}),
+            'kepala_rumah_tangga': forms.TextInput(attrs={'class': 'form-control'}),
+            'nik_kepala_rumah_tangga': forms.NumberInput(attrs={'class': 'form-control'}),
+            'pekerjaan_kepala_rumah_tangga' : forms.Select(attrs={'class': 'form-control'}),
+            'penghasilan_kepala_rumah_tangga' : forms.NumberInput(attrs={'class': 'form-control'}),
+            'pendidikan_kepala_rumah_tangga': forms.Select(attrs={'class': 'form-control'}),
+            'alamat_rumah_tangga' : forms.TextInput(attrs={'class': 'form-control'}),
+            'jumlah_anggota_rumah_tangga': forms.NumberInput(attrs={'class': 'form-control'}),
+            'status_kepemilikan_tempat_tinggal': forms.Select(attrs={'class': 'form-control'}),
+            'luas_lantai_tempat_tinggal': forms.NumberInput(attrs={'class': 'form-control'}),
+            'jenis_lantai_tempat_tinggal': forms.Select(attrs={'class': 'form-control'}),
+            'jenis_dinding_tempat_tinggal': forms.Select(attrs={'class': 'form-control'}),
+            'jenis_atap_tempat_tinggal': forms.Select(attrs={'class': 'form-control'}),
+            'fasilitas_buang_air_besar': forms.Select(attrs={'class': 'form-control'}),
+            'sumber_penerangan_rumah': forms.Select(attrs={'class': 'form-control'}),
+            'bahan_bakar_untuk_memasak': forms.Select(attrs={'class': 'form-control'}),
+            'jumlah_konsumsi_daging_susu_ayam_dalam_seminggu': forms.Select(attrs={'class': 'form-control'}), 
+            'jumlah_membeli_pakaian_baru_dalam_setahun': forms.Select(attrs={'class': 'form-control'}),
+            'jumlah_makan_dalam_sehari': forms.Select(attrs={'class': 'form-control'}),
+            'mampu_membayar_biaya_pengobatan': forms.Select(attrs={'class': 'form-control'}),
+            'sumber_air_minum': forms.Select(attrs={'class': 'form-control'}),
+            'memiliki_simpanan_aset': forms.Select(attrs={'class': 'form-control'}),
+        } 
+        
+

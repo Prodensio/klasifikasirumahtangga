@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+
+
+
+
+
+
+
+{% block sidebar %}
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.name == 'Admin' %}
+                {% include 'sidebarAdmin.html' %}
+            {% elif group.name == 'Operator' %}
+                {% include 'sidebarOperator.html' %}
+            {% elif group.name == 'Penduduk' %}
+                {% include 'sidebarPenduduk.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock sidebar %}
+
+{% block kontenLink %}
+<li class="breadcrumb-item"><a href="{% url 'akun:index' %}">{{content_link}}</a></li>
+{% endblock kontenLink %}
+
+{% block konten %}
+<!-- Main content -->
+<section class="content">
+    <div class="card">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show{% if message.tags %} {{ message.tags }}{% endif %}"
+            role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <div class="card-header">
+            <h3>DETAIL</h3>
+        </div>
+        {% if profil_user %}
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="user-info-item">
+                            <span class="info-label">Email:</span>
+                            <span class="info-value">{{ profil_user.email }}</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span class="info-label">First Name:</span>
+                            <span class="info-value">{{ profil_user.first_name }}</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span class="info-label">Last Name:</span>
+                            <span class="info-value">{{ profil_user.last_name }}</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span class="info-label">Password:</span>
+                            <span class="info-value">**********</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>AKSI</h5>
+                <div class="btn-group">
+                    <a class="btn btn-info btn-sm" href="{% url 'akun:editProfil' edit_profil_id=profil_user.id %}">
+                        <i class="fas fa-pencil-alt"></i> Edit
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+
+    </div>
+
+
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>AKSI</h5>
+                <div class="btn-group">
+                    <a class="btn btn-info btn-sm" href="{% url 'akun:editProfil' edit_profil_id=profil_user.id%}">
+                        <i class="fas fa-pencil-alt"></i> Edit
+                    </a> 
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+{% endblock konten %}
+    

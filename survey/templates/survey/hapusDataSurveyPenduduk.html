@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.name == 'Admin' %}
+                {% include 'sidebarAdmin.html' %}
+            {% elif group.name == 'Operator' %}
+                {% include 'sidebarOperator.html' %}
+            {% elif group.name == 'Penduduk' %}
+                {% include 'sidebarPenduduk.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock sidebar %}
+
+{% block kontenLink %}
+<li class="breadcrumb-item"><a href="{% url 'survey:index' %}">{{content_link}}</a></li>
+{% endblock kontenLink %}
+
+{% block konten %}
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Hapus Data Survey Penduduk</h3>
+        </div>
+        <div class="card-body">
+            <p>Apakah Anda yakin ingin menghapus data penduduk dengan ID {{ data.id }}?</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Hapus</button>
+                <a href="{% url 'survey:index' %}" class="btn btn-secondary">Batal</a>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock konten %}

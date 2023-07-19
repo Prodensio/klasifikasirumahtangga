@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}
+{% if user_groups %}
+{% for group in user_groups %}
+{% if group.name == 'Admin' %}
+{% include 'sidebarAdmin.html' %}
+{% elif group.name == 'Operator' %}
+{% include 'sidebarOperator.html' %}
+{% elif group.name == 'Penduduk' %}
+{% include 'sidebarPenduduk.html' %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock sidebar %}
+
+
+
+{% block kontenLink %}
+<li class="breadcrumb-item"><a href="{% url 'klasifikasi:modeling' %}">{{content_link}}</a></li>
+{% endblock kontenLink %}
+
+
+
+{% block konten %}
+<section class="content">
+
+
+
+    <div class="card">
+        <div class="card-header">
+            <a href="{% url 'klasifikasi:latihModel' %}" class="btn btn-warning">LATIH MODEL</a>
+        </div>
+            
+        <div class="card-body">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Data Training</h3>
+                </div>
+                <div class="card-body table-responsive p-0" style="height: 300px;">
+                    <table class="table table-head-fixed text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>NO</th>
+                                <th>Luas Lantai</th>
+                                <th>Jenis Lantai</th>
+                                <th>Jenis Dinding</th>
+                                <th>Fasilitas Buang Air Besar</th>
+                                <th>Sumber Air Minum</th>
+                                <th>Sumber Penerangan Rumah</th>
+                                <th>Bahan Bakar Untuk Memasak</th>
+                                <th>Jumlah Konsumsi Daging/Susu/Ayam Dalam Seminggu</th>
+                                <th>Jumlah Makan Dalam Sehari</th>
+                                <th>Jumlah Membeli Pakaian Baru Dalam Setahun</th>
+                                <th>Penghasilan Kepala Rumah Tangga</th>
+                                <th>Pendidikan Kepala Rumah Tangga</th>
+                                <th>Mampu Membayar Biaya Pengobatan</th>
+                                <th>Memiliki Simpanan Aset</th>
+                                <th>Status Rumah Tangga</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for index, row in data_training.iterrows %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.luas_lantai }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.jenis_lantai }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.jenis_dinding }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.fasilitas_buang_air_besar }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.sumber_air_minum }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.sumber_penerangan_rumah }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.bahan_bakar_untuk_memasak }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.jumlah_konsumsi_daging_susu_ayam_dalam_seminggu }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.jumlah_makan_dalam_sehari }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.jumlah_membeli_pakaian_baru_dalam_setahun }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.penghasilan_kepala_rumah_tangga }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.pendidikan_kepala_rumah_tangga }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.mampu_membayar_biaya_pengobatan }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.memiliki_simpanan_aset }}</td>
+                                <td style="background-color: rgb(206, 236, 177);">{{ row.status_rumah_tangga }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    
+            <div class="card">
+                <div class="card-header">
+                    <h3>Data Testing</h3>
+                </div>
+                <div class="card-body table-responsive p-0" style="height: 300px;">
+                    <table class="table table-head-fixed text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>NO</th>
+                                <th>Luas Lantai</th>
+                                <th>Jenis Lantai</th>
+                                <th>Jenis Dinding</th>
+                                <th>Fasilitas Buang Air Besar</th>
+                                <th>Sumber Air Minum</th>
+                                <th>Sumber Penerangan Rumah</th>
+                                <th>Bahan Bakar Untuk Memasak</th>
+                                <th>Jumlah Konsumsi Daging/Susu/Ayam Dalam Seminggu</th>
+                                <th>Jumlah Makan Dalam Sehari</th>
+                                <th>Jumlah Membeli Pakaian Baru Dalam Setahun</th>
+                                <th>Penghasilan Kepala Rumah Tangga</th>
+                                <th>Pendidikan Kepala Rumah Tangga</th>
+                                <th>Mampu Membayar Biaya Pengobatan</th>
+                                <th>Memiliki Simpanan Aset</th>
+                                <th>Status Rumah Tangga</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for index, row in data_testing.iterrows %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.luas_lantai }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.jenis_lantai }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.jenis_dinding }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.fasilitas_buang_air_besar }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.sumber_air_minum }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.sumber_penerangan_rumah }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.bahan_bakar_untuk_memasak }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.jumlah_konsumsi_daging_susu_ayam_dalam_seminggu }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.jumlah_makan_dalam_sehari }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.jumlah_membeli_pakaian_baru_dalam_setahun }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.penghasilan_kepala_rumah_tangga }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.pendidikan_kepala_rumah_tangga }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.mampu_membayar_biaya_pengobatan }}</td>
+                                <td style="background-color: darkseagreen;">{{ row.memiliki_simpanan_aset }}</td>
+                                <td style="background-color: rgb(206, 236, 177);">{{ row.status_rumah_tangga }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+</section>
+{% endblock konten %}

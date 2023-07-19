@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.name == 'Admin' %}
+                {% include 'sidebarAdmin.html' %}
+            {% elif group.name == 'Operator' %}
+                {% include 'sidebarOperator.html' %}
+            {% elif group.name == 'Penduduk' %}
+                {% include 'sidebarPenduduk.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock sidebar %}
+
+
+{% block kontenLink %}
+<li class="breadcrumb-item"><a href="{% url 'survey:index' %}">{{content_link}}</a></li>
+{% endblock kontenLink %}
+
+{% block konten %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Edit Survey Rumah Tangga</h3>
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="{{ form_edit_data_survey_rumah_tangga.dusun.id_for_label }}">DUSUN</label>
+                                {{ form_edit_data_survey_rumah_tangga.dusun }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form_edit_data_survey_rumah_tangga.rt.id_for_label }}">RT</label>
+                                {{ form_edit_data_survey_rumah_tangga.rt }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form_edit_data_survey_rumah_tangga.no_rumah_tangga.id_for_label }}">NO
+                                    RUMAH TANGGA</label>
+                                {{ form_edit_data_survey_rumah_tangga.no_rumah_tangga }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form_edit_data_survey_rumah_tangga.no_kartu_keluarga.id_for_label }}">NO
+                                    KARTU KELUARGA</label>
+                                {{ form_edit_data_survey_rumah_tangga.no_kartu_keluarga }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.kepala_rumah_tangga.id_for_label }}">KEPALA
+                                    RUMAH TANGGA</label>
+                                {{ form_edit_data_survey_rumah_tangga.kepala_rumah_tangga }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.nik_kepala_rumah_tangga.id_for_label }}">NIK
+                                    KEPALA RUMAH TANGGA</label>
+                                {{ form_edit_data_survey_rumah_tangga.nik_kepala_rumah_tangga }}
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.pekerjaan_kepala_rumah_tangga.id_for_label }}">PEKERJAAN
+                                    KEPALA RUMAH TANGGA</label>
+                                {{ form_edit_data_survey_rumah_tangga.pekerjaan_kepala_rumah_tangga }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.penghasilan_kepala_rumah_tangga.id_for_label }}">PENGHASILAN
+                                    KEPALA RUMAH TANGGA</label>
+                                {{ form_edit_data_survey_rumah_tangga.penghasilan_kepala_rumah_tangga }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.pendidikan_kepala_rumah_tangga.id_for_label }}">PENDIDIKAN
+                                    KEPALA RUMAH TANGGA</label>
+                                {{ form_edit_data_survey_rumah_tangga.pendidikan_kepala_rumah_tangga }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.alamat_rumah_tangga.id_for_label }}">ALAMAT
+                                    RUMAH TANGGA</label>
+                                {{ form_edit_data_survey_rumah_tangga.alamat_rumah_tangga }}
+                            </div>
+
+
+
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.jumlah_anggota_rumah_tangga.id_for_label }}">JUMLAH
+                                    ANGGOTA RUMAH TANGGA</label>
+                                {{ form_edit_data_survey_rumah_tangga.jumlah_anggota_rumah_tangga }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.status_kepemilikan_tempat_tinggal.id_for_label }}">STATUS
+                                    TEMPAT TINGGAL</label>
+                                {{ form_edit_data_survey_rumah_tangga.status_kepemilikan_tempat_tinggal }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.luas_lantai_tempat_tinggal.id_for_label }}">LUAS
+                                    LANTAI TEMPAT TINGGAL (M<sup>2</sup>)</label>
+                                {{ form_edit_data_survey_rumah_tangga.luas_lantai_tempat_tinggal }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.jenis_lantai_tempat_tinggal.id_for_label }}">JENIS
+                                    LANTAI TEMPAT TINGGAL</label>
+                                {{ form_edit_data_survey_rumah_tangga.jenis_lantai_tempat_tinggal }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.jenis_dinding_tempat_tinggal.id_for_label }}">JENIS
+                                    DINDING TEMPAT TINGGAL</label>
+                                {{ form_edit_data_survey_rumah_tangga.jenis_dinding_tempat_tinggal }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.jenis_atap_tempat_tinggal.id_for_label }}">JENIS
+                                    ATAP TEMPAT TINGGAL</label>
+                                {{ form_edit_data_survey_rumah_tangga.jenis_atap_tempat_tinggal }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.fasilitas_buang_air_besar.id_for_label }}">FASILITAS
+                                    BUANG AIR BESAR</label>
+                                {{ form_edit_data_survey_rumah_tangga.fasilitas_buang_air_besar }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.jenis_penerangan_rumah.id_for_label }}">SUMBER
+                                    PENERANGAN RUMAH</label>
+                                {{ form_edit_data_survey_rumah_tangga.sumber_penerangan_rumah }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.energi_untuk_memasak.id_for_label }}">BAHAN BAKAR
+                                    UNTUK MEMASAK</label>
+                                {{ form_edit_data_survey_rumah_tangga.bahan_bakar_untuk_memasak }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.jumlah_konsumsi_daging_susu_telur_dalam_seminggu.id_for_label }}">JUMLAH
+                                    KONSUMSI DAGING/SUSU/AYAM DALAM SEMINGGU</label>
+                                {{ form_edit_data_survey_rumah_tangga.jumlah_konsumsi_daging_susu_ayam_dalam_seminggu}}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.jumlah_membeli_pakaian_sekali_dalam_setahun.id_for_label }}">JUMLAH
+                                    MEMBELI PAKAIAN BARU DALAM SETAHUN</label>
+                                {{ form_edit_data_survey_rumah_tangga.jumlah_membeli_pakaian_baru_dalam_setahun }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.jumlah_makan_dalam_sehari.id_for_label }}">JUMLAH
+                                    MAKAN DALAM SEHARI</label>
+                                {{ form_edit_data_survey_rumah_tangga.jumlah_makan_dalam_sehari }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.mampu_membayar_biaya_pengobatan.id_for_label }}">MAMPU
+                                    MEMBAYAR BIAYA PENGOBATAN</label>
+                                {{ form_edit_data_survey_rumah_tangga.mampu_membayar_biaya_pengobatan }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.sumber_air_minum.id_for_label }}">SUMBER
+                                    AIR MINUM RUMAH TANGGA</label>
+                                {{ form_edit_data_survey_rumah_tangga.sumber_air_minum }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_edit_data_survey_rumah_tangga.memiliki_simpanan_aset.id_for_label }}">MEMILIKI
+                                    SIMPANAN ASET</label>
+                                {{ form_edit_data_survey_rumah_tangga.memiliki_simpanan_aset }}
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Kirim</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+
+{% block sidebar %}
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.name == 'Admin' %}
+                {% include 'sidebarAdmin.html' %}
+            {% elif group.name == 'Operator' %}
+                {% include 'sidebarOperator.html' %}
+            {% elif group.name == 'Penduduk' %}
+                {% include 'sidebarPenduduk.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock sidebar %}
+
+
+{% block kontenLink %}
+<li class="breadcrumb-item"><a href="{% url 'rumahtangga:bantuan' %}">{{content_link}}</a></li>
+{% endblock kontenLink %}
+
+
+{% block konten %}
+<section class="content">
+    <!-- Default box -->
+    <div class="card">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show{% if message.tags %} {{ message.tags }}{% endif %}"
+            role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6 text-left">
+                    <a href="{% url 'rumahtangga:tambahBantuan' %}" class="btn btn-primary">TAMBAH DATA BANTUAN</a>
+                    <!-- <a href="#" class="btn btn-warning">Export Data Excel</a> -->
+                </div>
+                <!-- <div class="col-md-6">
+                    <form action="#" method="GET">
+                        <div class="input-group">
+                            <input type="text" name="keyword" class="form-control" placeholder="Cari data...">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary">Cari</button>
+                            </div>
+                        </div>
+                    </form>
+                </div> -->
+            </div>
+        </div>
+        
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-striped projects">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%">NO</th>
+                            <th style="width: 5%">RUMAH TANGGA</th>
+                            <th style="width: 15%">ALAMAT</th>
+                            <th style="width: 15%">STATUS RUMAH TANGGA</th>
+                            <th style="width: 15%">JENIS BANTUAN</th>
+                            <th style="width: 20%">JUMLAH BANTUAN</th>
+                            <th style="width: 15%">AKSI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for bantuan in bantuan_rumah_tangga %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>
+                                <a>{{ bantuan.rumah_tangga.no_rumah_tangga }}</a>
+                                <br>
+                                <strong>{{ bantuan.rumah_tangga.kepala_rumah_tangga.nama_penduduk }}</strong>
+                            </td>
+                            <td>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <p><strong>Alamat:</strong> {{ bantuan.rumah_tangga.kepala_rumah_tangga.alamat }}</p>
+                                    </li>
+                                    <li>
+                                        <p><strong>Dusun:</strong> {{ bantuan.rumah_tangga.kepala_rumah_tangga.dusun }}</p>
+                                    </li>
+                                    <li>
+                                        <p><strong>RT:</strong> {{ bantuan.rumah_tangga.kepala_rumah_tangga.rt }}</p>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>
+                                <small>{{ bantuan.rumah_tangga.status_rumah_tangga }}</small>
+                                {% if bantuan.rumah_tangga.status_rumah_tangga == 'MISKIN' %}
+                                <div class="progress mt-2">
+                                    <div class="progress-bar bg-red" role="progressbar" style="width: 57%"></div>
+                                </div>
+                                {% else %}
+                                <div class="progress mt-2">
+                                    <div class="progress-bar bg-green" role="progressbar" style="width: 57%"></div>
+                                </div>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="badge badge-success">{{ bantuan.jenis_bantuan }}</span>
+                            </td>
+                            <td>
+                                <span class="badge badge-success">Rp.{{ bantuan.jumlah_bantuan|floatformat:0|intcomma }}</span>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a class="btn btn-danger btn-sm"
+                                        href="{% url 'rumahtangga:hapusBantuan' hapus_bantuan_id=bantuan.id %}">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</section>
+{% endblock konten %}

@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.name == 'Admin' %}
+                {% include 'sidebarAdmin.html' %}
+            {% elif group.name == 'Operator' %}
+                {% include 'sidebarOperator.html' %}
+            {% elif group.name == 'Penduduk' %}
+                {% include 'sidebarPenduduk.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock sidebar %}
+
+
+
+
+{% block konten %}
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>KETERANGAN RUMAH TANGGA</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>No Rumah Tangga</strong></p>
+                                <p><strong>Kepala Rumah Tangga</strong></p>
+                                <p><strong>Pekerjaan Kepala Rumah Tangga</strong></p>
+                                <p><strong>Penghasilan Kepala Rumah Tangga</strong></p>
+                                <p><strong>Pendidikan Kepala Rumah Tangga</strong></p>
+                                <p><strong>Jumlah Anggota Rumah Tangga</strong></p>
+                                <p><strong>Alamat Rumah Tangga</strong></p>
+                                <p><strong>Status Tempat Tinggal</strong></p>
+                                <p><strong>Luas Lantai</strong></p>
+                                <p><strong>Jenis Lantai</strong></p>
+                                <p><strong>Jenis Dinding</strong></p>
+                                <p><strong>Jenis Atap</strong></p>
+                                <p><strong>Fasilitas Buang Air Besar</strong></p>
+                                <p><strong>Sumber Penerangan Rumah</strong></p>
+                                <p><strong>Energi Untuk Memasak</strong></p>
+                                <p><strong>Jumhlah Konsumsi Daging/Susu/Ayam Dalam Seminggu</strong></p>
+                                <p><strong>Jumhlah Membeli Pakaian Baru Dalam Setahun</strong></p>
+                                <p><strong>Jumhlah Makan Dalam Sehari</strong></p>
+                                <p><strong>Mampu Membayar Biaya Pengobatan</strong></p>
+                                <p><strong>Sumber Air Minum</strong></p>
+                                <p><strong>Memiliki Simpanan Aset</strong></p>
+                                <p><strong>Status Rumah Tangga</strong></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ rumah_tangga.no_rumah_tangga }}</p>
+                                <p>{{ rumah_tangga.kepala_rumah_tangga.nama_penduduk }}</p>
+                                <p>{{ rumah_tangga.kepala_rumah_tangga.pekerjaan }}</p>
+                                <p>{{ rumah_tangga.kepala_rumah_tangga.penghasilan }}</p>
+                                <p>{{ rumah_tangga.kepala_rumah_tangga.pendidikan }}</p>
+                                <p>{{ jumlah_anggota_rumah_tangga }} Orang</p>
+                                <p>{{ rumah_tangga.kepala_rumah_tangga.alamat }}/Dusun{{rumah_tangga.kepala_rumah_tangga.dusun }}/RT {{rumah_tangga.kepala_rumah_tangga.rt}}
+                                </p>
+                                <p>{{rumah_tangga.status_kepemilikan_tempat_tinggal}}</p>
+                                <p>{{rumah_tangga.luas_lantai_tempat_tinggal}}</p>
+                                <p>{{rumah_tangga.jenis_lantai_tempat_tinggal}}</p>
+                                <p>{{rumah_tangga.jenis_dinding_tempat_tinggal}}</p>
+                                <p>{{rumah_tangga.jenis_atap_tempat_tinggal}}</p>
+                                <p>{{rumah_tangga.fasilitas_buang_air_besar}}</p>
+                                <p>{{rumah_tangga.sumber_penerangan_rumah}}</p>
+                                <p>{{rumah_tangga.bahan_bakar_untuk_memasak}}</p>
+                                <p>{{rumah_tangga.jumlah_konsumsi_daging_susu_ayam_dalam_seminggu}}</p>
+                                <p>{{rumah_tangga.jumlah_membeli_pakaian_baru_dalam_setahun}}</p>
+                                <p>{{rumah_tangga.jumlah_makan_dalam_sehari}}</p>
+                                <p>{{rumah_tangga.mampu_membayar_biaya_pengobatan}}</p>
+                                <p>{{rumah_tangga.sumber_air_minum}}</p>
+                                <p>{{rumah_tangga.memiliki_simpanan_aset}}</p>
+                                <p><strong>{{rumah_tangga.status_rumah_tangga}}/{{rumah_tangga.tahun}}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>ANGGOTA RUMAH TANGGA</h4>
+                    </div>
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%">NO</th>
+                                        <th style="width: 30%">NAMA PENDUDUK</th>
+                                        <th style="width: 30%">HUBUNGAN DALAM RUMAH TANGGA</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for anggota in anggota_rumah_tangga %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ anggota.penduduk.nama_penduduk }}</td>
+                                        <td>{{ anggota.hubungan_dalam_rumah_tangga }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <a href="{% url 'penduduk:cariDataPenduduk' %}" class="btn btn-secondary">Kembali</a>
+    </div>
+</section>
+{% endblock konten %}

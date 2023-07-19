@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+
+
+{% block sidebar %}
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.name == 'Admin' %}
+                {% include 'sidebarAdmin.html' %}
+            {% elif group.name == 'Operator' %}
+                {% include 'sidebarOperator.html' %}
+            {% elif group.name == 'Penduduk' %}
+                {% include 'sidebarPenduduk.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock sidebar %}
+
+
+{% block kontenLink %}
+<li class="breadcrumb-item"><a href="{% url 'klasifikasi:index' %}">{{content_link}}</a></li>
+{% endblock kontenLink %}
+
+{% block konten %}
+<div class="card">
+    <div class="card-body">
+        <div class="col-md-6 text-right">
+            <a href="{% url 'klasifikasi:exportData' %}" class="btn btn-warning">Export Data Excel</a>
+        </div>
+        <div class="card-header">
+            <h3>DETAIL PREDIKSI</h3>
+        </div>
+        <div class="card-body p-0">
+            <div class="card-body table-responsive p-0" style="height: 300px;">
+                <table class="table table-head-fixed text-nowrap">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%">NO</th>
+                            <th style="width: 15%">KEPALA RUMAH TANGGA</th>
+                            <th style="width: 15%">LUAS LANTAI</th>
+                            <th style="width: 15%">JENIS LANTAI</th>
+                            <th style="width: 15%">JENIS DINDING</th>
+                            <th style="width: 15%">FASILITAS BAB</th>
+                            <th style="width: 15%">SUMBER AIR MINUM</th>
+                            <th style="width: 15%">SUMBER PENERANGAN RUMAH</th>
+                            <th style="width: 15%">BAHAN BAKAR UNTUK MEMASAK</th>
+                            <th style="width: 15%">JUMLAH KONSUMSI DAGING/SUSU/AYAM DALAM SEMINGGU</th>
+                            <th style="width: 15%">JUMLAH MAKAN DALAM SEHARI</th>
+                            <th style="width: 15%">JUMLAH MEMBELI PAKAIAN BARU DALAM SETAHUN</th>
+                            <th style="width: 15%">PENGHASILAN KEPALA RUMAH TANGGA</th>
+                            <th style="width: 15%">PENDIDIKAN KEPALA RUMAH TANGGA</th>
+                            <th style="width: 15%">MAMPU MEMBAYAR BIAYA PENGOBATAN</th>
+                            <th style="width: 15%">MEMILIKI SIMPANAN ASET</th>
+                            <th style="width: 15%">PREDIKSI STATUS RUMAH TANGGA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for prediksi in data_prediksi %}
+                        <tr>
+                            <td>{{ prediksi.id }}</td>
+                            <td>{{ prediksi.survey_rumah_tangga.kepala_rumah_tangga }}</td>
+                            <td>{{ prediksi.survey_rumah_tangga.luas_lantai_tempat_tinggal }}</td>
+                            <td>{{ prediksi.survey_rumah_tangga.jenis_lantai_tempat_tinggal }}</td>
+                            <td>{{ prediksi.survey_rumah_tangga.jenis_dinding_tempat_tinggal }}</td>
+                            <td>{{ prediksi.survey_rumah_tangga.fasilitas_buang_air_besar }}</td>
+                            <td>{{ prediksi.survey_rumah_tangga.sumber_air_minum }}</td>
+                            <td>{{ prediksi.survey_rumah_tangga.sumber_penerangan_rumah }}</td>
+                            <td>{{ prediksi.survey_rumah_tangga.bahan_bakar_untuk_memasak }}</td>
+                            <td>{{ prediksi.survey_rumah_tangga.jumlah_konsumsi_daging_susu_ayam_dalam_seminggu }}</td>
+                            <td>{{ prediksi.survey_rumah_tangga.jumlah_makan_dalam_sehari }}</td>
+                            <td>{{ prediksi.survey_rumah_tangga.jumlah_membeli_pakaian_baru_dalam_setahun }}</td>
+                            <td>{{ prediksi.survey_rumah_tangga.penghasilan_kepala_rumah_tangga }}</td>
+                            <td>{{ prediksi.survey_rumah_tangga.pendidikan_kepala_rumah_tangga }}</td>
+                            <td>{{ prediksi.survey_rumah_tangga.mampu_membayar_biaya_pengobatan }}</td>
+                            <td>{{ prediksi.survey_rumah_tangga.memiliki_simpanan_aset }}</td>
+                            <td>{{ prediksi.prediction }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock konten %}

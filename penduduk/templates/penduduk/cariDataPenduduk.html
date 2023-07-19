@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.name == 'Admin' %}
+                {% include 'sidebarAdmin.html' %}
+            {% elif group.name == 'Operator' %}
+                {% include 'sidebarOperator.html' %}
+            {% elif group.name == 'Penduduk' %}
+                {% include 'sidebarPenduduk.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock sidebar %}
+
+{% block kontenLink %}
+    <li class="breadcrumb-item"><a href="{% url 'rumahtangga:index' %}">{{ content_link }}</a></li>
+{% endblock kontenLink %}
+
+{% block konten %}
+<!-- Main content -->
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="{% url 'penduduk:cariDataPenduduk' %}" method="GET">
+                        <div class="input-group">
+                            <input type="text" name="keyword" class="form-control" placeholder="Silahkan Masukan Nama Penduduk" value="{{ keyword }}">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary">Cari</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-0">
+            {% if keyword %}
+                {% if penduduk %}
+                    <div class="table-responsive">
+                        <table class="table table-striped projects">
+                            <thead>
+                                <tr>
+                                    <th style="width: 1%">NO</th>
+                                    <th style="width: 20%">PENDUDUK</th>
+                                    <th style="width: 30%">DETAIL ALAMAT</th>
+                                    <th style="width: 8%" class="text-center">STATUS RUMAH TANGGA</th>
+                                    <th style="width: 30%" class="text-center">AKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for data in penduduk %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>
+                                            <a>{{ data.no_induk_kependudukan }}</a><br>
+                                            <strong>{{ data.nama_penduduk }}</strong>
+                                        </td>
+                                        <td>
+                                            <ul class="list-inline">
+                                                <li class="list-inline-item">
+                                                    <p><strong>Dusun:</strong> {{ data.dusun }}</p>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <p><strong>RT:</strong> {{ data.rt }}</p>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <p><strong>Alamat:</strong> {{ data.alamat }}</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td class="project-state">
+                                            {% if data.anggota_rumah_tangga.all %}
+                                                {% for anggota in data.anggota_rumah_tangga.all %}
+                                                    {% if anggota.rumah_tangga %}
+                                                        {% if anggota.rumah_tangga.status_rumah_tangga == 'MISKIN' %}
+                                                            <a href="{% url 'rumahtangga:detail' anggota.rumah_tangga.id %}">
+                                                                <span class="badge badge-danger">{{ anggota.rumah_tangga.status_rumah_tangga }}</span>
+                                                            </a>
+                                                        {% else %}
+                                                            <a href="{% url 'rumahtangga:detail' anggota.rumah_tangga.id %}">
+                                                                <span class="badge badge-success">{{ anggota.rumah_tangga.status_rumah_tangga }}</span>
+                                                            </a>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                <span class="badge badge-warning">Belum memiliki rumah tangga</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="project-actions text-right">
+                                            <a class="btn btn-primary btn-sm" data-toggle="modal"
+                                            data-target="#myModal{{ data.id }}">
+                                            <i class="fas fa-folder"></i> View
+                                        </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center mt-4">
+                        <h4>Tidak ada data yang ditemukan</h4>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+
+{% for data in penduduk %}
+    <!-- Modal -->
+    <div class="modal fade" id="myModal{{ data.id }}" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="myModalLabel">
+                        <i class="fas fa-user"></i> Detail Penduduk
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title font-weight-bold">Informasi Personal</h6>
+                                    <p class="card-text"><strong>NIK:</strong> {{data.no_induk_kependudukan }}</p>
+                                    <p class="card-text"><strong>Nama Penduduk:</strong> {{data.nama_penduduk }}</p>
+                                    <p class="card-text"><strong>Jenis Kelamin:</strong> {{data.jenis_kelamin }}</p>
+                                    <p class="card-text"><strong>Tempat Lahir:</strong> {{data.tempat_lahir }}</p>
+                                    <p class="card-text"><strong>Tanggal Lahir:</strong> {{data.tanggal_lahir }}</p>
+                                    <p class="card-text"><strong>Status Pernikahan:</strong> {{data.status_pernikahan }}</p>
+                                    <p class="card-text"><strong>Pekerjaan:</strong> {{data.pekerjaan }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title font-weight-bold">Informasi Alamat</h6>
+                                    <p class="card-text"><strong>Dusun:</strong> {{ data.dusun }}</p>
+                                    <p class="card-text"><strong>RT:</strong> {{ data.rt }}</p>
+                                    <p class="card-text"><strong>Alamat:</strong> {{ data.alamat }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+{% endblock konten %}

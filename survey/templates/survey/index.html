@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+
+
+{% block sidebar %}
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.name == 'Admin' %}
+                {% include 'sidebarAdmin.html' %}
+            {% elif group.name == 'Operator' %}
+                {% include 'sidebarOperator.html' %}
+            {% elif group.name == 'Penduduk' %}
+                {% include 'sidebarPenduduk.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock sidebar %}
+
+{% block kontenLink %}
+<li class="breadcrumb-item"><a href="{% url 'survey:index' %}">{{content_link}}</a></li>
+{% endblock kontenLink %}
+
+
+{% block konten %}
+<section class="content">
+    <!-- Default box -->
+    <div class="card">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show{% if message.tags %} {{ message.tags }}{% endif %}"
+            role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6 text-left">
+                    <a href="{% url 'survey:tambahDataSurveyRumahTangga'%}" class="btn btn-primary">SURVEI RUMAH TANGGA</a>
+                    <a href="{% url 'survey:tambahDataSurveyPenduduk' %}" class="btn btn-warning">SURVEI PENDUDUK</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-header">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link {% if active_tab == 'rumah_tangga' %}active{% endif %}" href="#rumah-tangga"
+                        data-toggle="pill">Rumah Tangga</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if active_tab == 'penduduk' %}active{% endif %}" href="#penduduk"
+                        data-toggle="pill">Penduduk</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="card-body p-0">
+            <div class="tab-content">
+                <!-- Rumah Tangga Tab -->
+                <div class="tab-pane fade show {% if active_tab == 'rumah_tangga' %}active{% endif %}"
+                    id="rumah-tangga">
+                    <div class="table-responsive">
+                        <table class="table table-striped projects">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%">NO</th>
+                                    <th style="width: 5%">DUSUN</th>
+                                    <th style="width: 15%">RT</th>
+                                    <th style="width: 20%">NO RUMAH TANGGA</th>
+                                    <th style="width: 15%">NO KARTU KELUARGA</th>
+                                    <th style="width: 15%">KEPALA RUMAH TANGGA</th>
+                                    <th style="width: 15%">NIK KEPALA RUMAH TANGGA</th>
+                                    <th style="width: 15%">PEKERJAAN KEPALA RUMAH TANGGA</th>
+                                    <th style="width: 15%">PENGHASILAN KEPALA RUMAH TANGGA</th>
+                                    <th style="width: 15%">PENDIDIKAN KEPALA RUMAH TANGGA</th>
+                                    <th style="width: 15%">ALAMAT RUMAH TANGGA</th>
+                                    <th style="width: 15%">JUMLAH ANGGOTA RUMAH TANGGA</th>
+                                    <th style="width: 15%">STATUS TEMPAT TINGGAL</th>
+                                    <th style="width: 15%">LUAS LANTAI</th>
+                                    <th style="width: 15%">JENIS LANTAI</th>
+                                    <th style="width: 15%">JENIS DINDING</th>
+                                    <th style="width: 15%">JENIS ATAP</th>
+                                    <th style="width: 15%">FASILITAS BAB</th>
+                                    <th style="width: 15%">SUMBER PENERANGAN RUMAH</th>
+                                    <th style="width: 15%">BAHAN BAKAR UNTUK MEMASAK</th>
+                                    <th style="width: 15%">JUMLAH KONSUMSI DAGING/SUSU/AYAM DALAM SEMINGGU</th>
+                                    <th style="width: 15%">JUMLAH MEMBELI PAKAIAN BARU DALAM SETAHUN</th>
+                                    <th style="width: 15%">JUMLAH MAKAN DALAM SEHARI</th>
+                                    <th style="width: 15%">MAMPU MEMBAYAR BIAYA PENGOBATAN</th>
+                                    <th style="width: 15%">SUMBER AIR MINUM</th>
+                                    <th style="width: 15%">MEMILIKI SIMPANAN ASET</th>
+                                    <th style="width: 15%">TAHUN</th>
+                                    <th style="width: 30%">AKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                {% for data in data_survey_rumah_tangga %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{data.dusun}}</td>
+                                    <td>{{data.rt}}</td>
+                                    <td>{{data.no_rumah_tangga}}</td>
+                                    <td>{{data.no_kartu_keluarga}}</td>
+                                    <td>{{data.kepala_rumah_tangga}}</td>
+                                    <td>{{data.nik_kepala_rumah_tangga}}</td>
+                                    <td>{{data.pekerjaan_kepala_rumah_tangga}}</td>
+                                    <td>{{data.penghasilan_kepala_rumah_tangga}}</td>
+                                    <td>{{data.pendidikan_kepala_rumah_tangga}}</td>
+                                    <td>{{data.alamat_rumah_tangga}}</td>
+                                    <td>{{data.jumlah_anggota_rumah_tangga}}</td>
+                                    <td>{{data.status_kepemilikan_tempat_tinggal}}</td>
+                                    <td>{{data.luas_lantai_tempat_tinggal}}</td>
+                                    <td>{{data.jenis_lantai_tempat_tinggal}}</td>
+                                    <td>{{data.jenis_dinding_tempat_tinggal}}</td>
+                                    <td>{{data.jenis_atap_tempat_tinggal}}</td>
+                                    <td>{{data.fasilitas_buang_air_besar}}</td>
+                                    <td>{{data.sumber_penerangan_rumah}}</td>
+                                    <td>{{data.bahan_bakar_untuk_memasak}}</td>
+                                    <td>{{data.jumlah_konsumsi_daging_susu_ayam_dalam_seminggu}}</td>
+                                    <td>{{data.jumlah_membeli_pakaian_baru_dalam_setahun}}</td>
+                                    <td>{{data.jumlah_makan_dalam_sehari}}</td>
+                                    <td>{{data.mampu_membayar_biaya_pengobatan}}</td>
+                                    <td>{{data.sumber_air_minum}}</td>
+                                    <td>{{data.memiliki_simpanan_aset}}</td>
+                                    <td>{{data.tahun}}</td>
+
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="btn btn-info btn-sm"
+                                                href="{% url 'survey:editDataSurveyRumahTangga' data.id%}">
+                                                <i class="fas fa-pencil-alt"></i> Edit
+                                            </a>
+                                            <a class="btn btn-danger btn-sm"
+                                                href="{% url 'survey:hapusDataSurveyRumahTangga' data.id%}">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Penduduk Tab -->
+                <div class="tab-pane fade {% if active_tab == 'penduduk' %}show active{% endif %}" id="penduduk">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%">NO</th>
+                                    <th style="width: 10%">DUSUN</th>
+                                    <th style="width: 10%">RT</th>
+                                    <th style="width: 10%">NO RUMAH TANGGA</th>
+                                    <th style="width: 15%">NO KK</th>
+                                    <th style="width: 15%">NIK</th>
+                                    <th style="width: 15%">NAMA PENDUDUK</th>
+                                    <th style="width: 15%">JENIS KELAMIN</th>
+                                    <th style="width: 15%">TEMPAT LAHIR</th>
+                                    <th style="width: 15%">TANGGAL LAHIR</th>
+                                    <th style="width: 15%">ALAMAT</th>
+                                    <th style="width: 15%">STATUS PERNIKAHAN</th>
+                                    <th style="width: 15%">AGAMA</th>
+                                    <th style="width: 15%">NO HP</th>
+                                    <th style="width: 15%">PEKERJAAN</th>
+                                    <th style="width: 15%">PENGHASILAN</th>
+                                    <th style="width: 15%">PENDIDIKAN</th>
+                                    <th style="width: 15%">HUBUNGAN DALAM KELUARGA</th>
+                                    <th style="width: 15%">TAHUN</th>
+                                    <th style="width: 10%">AKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for data in data_survey_penduduk %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ data.dusun }}</td>
+                                    <td>{{ data.rt }}</td>
+                                    <td>{{ data.no_rumah_tangga }}</td>
+                                    <td>{{ data.no_kartu_keluarga }}</td>
+                                    <td>{{ data.no_induk_kependudukan }}</td>
+                                    <td>{{ data.nama_penduduk }}</td>
+                                    <td>{{ data.jenis_kelamin }}</td>
+                                    <td>{{ data.tempat_lahir }}</td>
+                                    <td>{{ data.tanggal_lahir }}</td>
+                                    <td>{{ data.alamat }}</td>
+                                    <td>{{ data.status_pernikahan }}</td>
+                                    <td>{{ data.agama }}</td>
+                                    <td>{{ data.no_hp }}</td>
+                                    <td>{{ data.pekerjaan }}</td>
+                                    <td>{{ data.penghasilan }}</td>
+                                    <td>{{ data.pendidikan }}</td>
+                                    <td>{{ data.hubungan_dalam_keluarga }}</td>
+                                    <td>{{ data.tahun }}</td>
+                                    <td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="btn btn-info btn-sm"
+                                                href="{% url 'survey:editDataSurveyPenduduk' data.id%}">
+                                                <i class="fas fa-pencil-alt"></i> Edit
+                                            </a>
+                                            <a class="btn btn-danger btn-sm"
+                                                href="{% url 'survey:hapusDataSurveyPenduduk' data.id%}">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </a>
+                                        </div>
+                                    </td>
+
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+    {% endblock konten %}

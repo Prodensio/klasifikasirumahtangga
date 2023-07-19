@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.name == 'Admin' %}
+                {% include 'sidebarAdmin.html' %}
+            {% elif group.name == 'Operator' %}
+                {% include 'sidebarOperator.html' %}
+            {% elif group.name == 'Penduduk' %}
+                {% include 'sidebarPenduduk.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock sidebar %}
+
+
+
+{% block kontenLink %}
+<li class="breadcrumb-item"><a href="{% url 'klasifikasi:index' %}">{{content_link}}</a></li>
+{% endblock kontenLink %}
+
+
+{% block konten %}
+
+<!-- data survey -->
+<section class="content">
+    <div class="card">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show{% if message.tags %} {{ message.tags }}{% endif %}"
+            role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="card-header">
+            <h3>DATA PREDIKSI</h3>
+        </div>
+        <div class="card-body p-0">
+            <div class="card-body table-responsive p-0" style="height: 300px;">
+                <table class="table table-head-fixed text-nowrap">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%">NO</th>
+                            <th style="width: 20%">AKSI</th>
+                            <th style="width: 15%">KEPALA RUMAH TANGGA</th>
+                            <th style="width: 15%">LUAS LANTAI</th>
+                            <th style="width: 15%">JENIS LANTAI</th>
+                            <th style="width: 15%">JENIS DINDING</th>
+                            <th style="width: 15%">FASILITAS BAB</th>
+                            <th style="width: 15%">SUMBER AIR MINUM</th>
+                            <th style="width: 15%">SUMBER PENERANGAN RUMAH</th>
+                            <th style="width: 15%">BAHAN BAKAR UNTUK MEMASAK</th>
+                            <th style="width: 15%">JUMLAH KONSUMSI DAGING/SUSU/AYAM DALAM SEMINGGU</th>
+                            <th style="width: 15%">JUMLAH MAKAN DALAM SEHARI</th>
+                            <th style="width: 15%">JUMLAH MEMBELI PAKAIAN DALAM SETAHUN</th>
+                            <th style="width: 15%">PENGHASILAN KEPALA RUMAH TANGGA</th>
+                            <th style="width: 15%">PENDIDIKAN KEPALA RUMAH TANGGA</th>
+                            <th style="width: 15%">MAMPU MEMBAYAR BIAYA PENGOBATAN</th>
+                            <th style="width: 15%">MEMILIKI SIMPANAN ASET</th>
+                            <!-- <th style="width: 15%">TAHUN</th> -->
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in data_survey_rumah_tangga %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>
+                                <a href="{% url 'klasifikasi:prediksi' prediksi_id=data.id %}"
+                                    class="btn btn-primary float-left">Prediksi Data</a>
+                                <!-- {% if data.prediction is not None %}
+                                <span class="badge badge-success">Sudah Diprediksi</span>
+                                {% else %}
+                                <span class="badge badge-warning">Belum Diprediksi</span>
+                                {% endif %} -->
+                            </td>
+                            <td>{{ data.kepala_rumah_tangga }}</td>
+                            <td>{{ data.luas_lantai_tempat_tinggal }}</td>
+                            <td>{{ data.jenis_lantai_tempat_tinggal }}</td>
+                            <td>{{ data.jenis_dinding_tempat_tinggal }}</td>
+                            <td>{{ data.fasilitas_buang_air_besar }}</td>
+                            <td>{{ data.sumber_air_minum }}</td>
+                            <td>{{ data.sumber_penerangan_rumah }}</td>
+                            <td>{{ data.bahan_bakar_untuk_memasak }}</td>
+                            <td>{{ data.jumlah_konsumsi_daging_susu_ayam_dalam_seminggu }}</td>
+                            <td>{{ data.jumlah_makan_dalam_sehari }}</td>
+                            <td>{{ data.jumlah_membeli_pakaian_baru_dalam_setahun }}</td>
+                            <td>{{ data.penghasilan_kepala_rumah_tangga }}</td>
+                            <td>{{ data.pendidikan_kepala_rumah_tangga }}</td>
+                            <td>{{ data.mampu_membayar_biaya_pengobatan }}</td>
+                            <td>{{ data.memiliki_simpanan_aset }}</td>
+                            <!-- <td>{{ data.tahun }}</td> -->
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- data survey -->
+
+{% endblock konten %}

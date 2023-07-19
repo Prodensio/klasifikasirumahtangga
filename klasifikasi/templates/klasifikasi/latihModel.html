@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.name == 'Admin' %}
+                {% include 'sidebarAdmin.html' %}
+            {% elif group.name == 'Operator' %}
+                {% include 'sidebarOperator.html' %}
+            {% elif group.name == 'Penduduk' %}
+                {% include 'sidebarPenduduk.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock sidebar %}
+
+{% block kontenLink %}
+    <li class="breadcrumb-item"><a href="{% url 'klasifikasi:modeling' %}">{{ content_link }}</a></li>
+{% endblock kontenLink %}
+
+{% block konten %}
+    <section class="content">
+        <div class="card">
+            <div class="card-header">
+                <a href="{% url 'klasifikasi:simpanModel' %}" class="btn btn-warning">SIMPAN MODEL</a>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="data-container">
+                                    <h1>SUPPORT VECTOR MACHINE</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Accuracy - Data Training</h3>
+                                <div class="data-container">
+                                    {% if akurasi_data_training_svm %}
+                                        <p>Accuracy: {{ akurasi_data_training_svm }}</p>
+                                    {% else %}
+                                        <p>No accuracy data available.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Classification Report - Data Training</h3>
+                                <div class="data-container">
+                                    {% if laporan_klasifikasi_data_train_svm %}
+                                        <pre>{{ laporan_klasifikasi_data_train_svm }}</pre>
+                                    {% else %}
+                                        <p>No classification report data available.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Confusion Matrix - Data Training</h3>
+                                <div class="data-container">
+                                    <img src="data:image/png;base64,{{ plot_data_svm }}" alt="Confusion Matrix - Data Training">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Accuracy - Data Testing</h3>
+                                <div class="data-container">
+                                    {% if akurasi_data_testing_svm %}
+                                        <p>Accuracy: {{ akurasi_data_testing_svm }}</p>
+                                    {% else %}
+                                        <p>No accuracy data available.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Classification Report - Data Testing</h3>
+                                <div class="data-container">
+                                    {% if laporan_klasifikasi_data_testing_svm %}
+                                        <pre>{{ laporan_klasifikasi_data_testing_svm }}</pre>
+                                    {% else %}
+                                        <p>No classification report data available.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Confusion Matrix - Data Testing</h3>
+                                <div class="data-container">
+                                    <img src="data:image/png;base64,{{ plot_data_test_svm }}" alt="Confusion Matrix - Data Testing">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="data-container">
+                                    <h1>SUPPORT VECTOR MACHINE DAN GRID SEARCH</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Best Parameters</h3>
+                                <div class="data-container">
+                                    {% if best_params %}
+                                        <p>{{ best_params }}</p>
+                                    {% else %}
+                                        <p>No best parameters found.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Accuracy - Data Training</h3>
+                                <div class="data-container">
+                                    {% if akurasi_data_training %}
+                                        <p>Accuracy: {{ akurasi_data_training }}</p>
+                                    {% else %}
+                                        <p>No accuracy data available.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Classification Report - Data Training</h3>
+                                <div class="data-container">
+                                    {% if laporan_klasifikasi_data_train %}
+                                        <pre>{{ laporan_klasifikasi_data_train }}</pre>
+                                    {% else %}
+                                        <p>No classification report data available.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Confusion Matrix - Data Training</h3>
+                                <div class="data-container">
+                                    <img src="data:image/png;base64,{{ plot_data }}" alt="Confusion Matrix - Data Training">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Accuracy - Data Testing</h3>
+                                <div class="data-container">
+                                    {% if akurasi_data_testing %}
+                                        <p>Accuracy: {{ akurasi_data_testing }}</p>
+                                    {% else %}
+                                        <p>No accuracy data available.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Classification Report - Data Testing</h3>
+                                <div class="data-container">
+                                    {% if laporan_klasifikasi_data_testing %}
+                                        <pre>{{ laporan_klasifikasi_data_testing }}</pre>
+                                    {% else %}
+                                        <p>No classification report data available.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Confusion Matrix - Data Testing</h3>
+                                <div class="data-container">
+                                    <img src="data:image/png;base64,{{ plot_data_test }}" alt="Confusion Matrix - Data Testing">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock konten %}

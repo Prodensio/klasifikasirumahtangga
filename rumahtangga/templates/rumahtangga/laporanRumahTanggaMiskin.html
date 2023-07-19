@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+
+
+{% block sidebar %}
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.name == 'Admin' %}
+                {% include 'sidebarAdmin.html' %}
+            {% elif group.name == 'Operator' %}
+                {% include 'sidebarOperator.html' %}
+            {% elif group.name == 'Penduduk' %}
+                {% include 'sidebarPenduduk.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock sidebar %}
+
+
+{% block kontenLink %}
+<li class="breadcrumb-item"><a href="{% url 'rumahtangga:index' %}">{{content_link}}</a></li>
+{% endblock kontenLink %}
+
+
+{% block konten %}
+
+<section class="content">
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Laporan Rumah Tangga Miskin</h3>
+        </div>
+        <div class="card-body">
+            <form method="get" action="{% url 'rumahtangga:laporan' %}" class="form-inline">
+
+                <div class="form-group">
+                    <label for="tahun" class="mr-2">Pilih Tahun</label>
+                    <select class="form-control" id="tahun" name="tahun">
+                        <option value="">-- Pilih Tahun --</option>
+                        {% for tahun in tahun_list %}
+                        <option value="{{ tahun.tahun }}" {% if tahun.tahun|yesno:"yes,no" == selected_year|yesno:"yes,no" %}selected{% endif %}>{{ tahun.tahun }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary ml-2">Tampilkan</button>
+            </form>
+
+            {% if selected_year %}
+            {% if rumah_tangga_miskin %}
+            <div class="mt-4">
+                <h4>Data Rumah Tangga Miskin</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>NO</th>
+                                <th>DUSUN</th>
+                                <th>RT</th>
+                                <th>NO RUMAH TANGGA</th>
+                                <th>NO KARTU KELUARGA</th>
+                                <th>RUMAH TANGGA</th>
+                                <th>NIK KEPALA RUMAH TANGGA</th>
+                                <th>PEKERJAAN KEPALA RUMAH TANGGA</th>
+                                <th>PENGHASILAN KEPALA RUMAH TANGGA</th>
+                                <th>PENDIDIKAN KEPALA RUMAH TANGGA</th>
+                                <th>ALAMAT</th>
+                                <th>JUMLAH ANGGOTA RUMAH TANGGA</th>
+                                <th>STATUS TEMPAT TINGGAL</th>
+                                <th>LUAS LANTAI</th>
+                                <th>JENIS LANTAI</th>
+                                <th>JENIS DINDING</th>
+                                <th>JENIS ATAP</th>
+                                <th>FASILITAS BAB</th>
+                                <th>SUMBER PENERANGAN RUMAH</th>
+                                <th>BAHAN BAKAR UNTUK MEMASAK</th>
+                                <th>JUMLAH KONSUMSI DAGING/TELUR/AYAM DALAM SEMINGGU</th>
+                                <th>JUMLAH MEMBELI PAKAIAN BARU DALAM SETAHUN</th>
+                                <th>JUMLAH MAKAN DALAM SEHARI</th>
+                                <th>MAMPU MEMBAYAR BIAYA PENGOBATAN</th>
+                                <th>SUMBER AIR MINUM</th>
+                                <th>MEMILIKI SIMPANAN ASET</th>
+                                <th>STATUS RUMAH TANGGA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for rumah_tangga in rumah_tangga_miskin %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ rumah_tangga.kepala_rumah_tangga.dusun }}</td>
+                                <td>{{ rumah_tangga.kepala_rumah_tangga.rt }}</td>
+                                <td>{{ rumah_tangga.no_rumah_tangga }}</td>
+                                <td>{{ rumah_tangga.kepala_rumah_tangga.no_kartu_keluarga }}</td>
+                                <td>{{ rumah_tangga.kepala_rumah_tangga.nama_penduduk }}</td>
+                                <td>{{ rumah_tangga.kepala_rumah_tangga.no_induk_kependudukan }}</td>
+                                <td>{{ rumah_tangga.kepala_rumah_tangga.pekerjaan }}</td>
+                                <td>{{ rumah_tangga.kepala_rumah_tangga.penghasilan }}</td>
+                                <td>{{ rumah_tangga.kepala_rumah_tangga.pendidikan }}</td>
+                                <td>{{ rumah_tangga.kepala_rumah_tangga.alamat }}</td>
+                                <td>{{ rumah_tangga.jumlah_anggota_rumah_tangga }}</td>
+                                <td>{{ rumah_tangga.status_kepemilikan_tempat_tinggal }}</td>
+                                <td>{{ rumah_tangga.luas_lantai_tempat_tinggal }}</td>
+                                <td>{{ rumah_tangga.jenis_lantai_tempat_tinggal }}</td>
+                                <td>{{ rumah_tangga.jenis_dinding_tempat_tinggal }}</td>
+                                <td>{{ rumah_tangga.jenis_atap_tempat_tinggal }}</td>
+                                <td>{{ rumah_tangga.fasilitas_buang_air_besar }}</td>
+                                <td>{{ rumah_tangga.sumber_penerangan_rumah }}</td>
+                                <td>{{ rumah_tangga.bahan_bakar_untuk_memasak }}</td>
+                                <td>{{ rumah_tangga.jumlah_konsumsi_daging_susu_ayam_dalam_seminggu }}</td>
+                                <td>{{ rumah_tangga.jumlah_membeli_pakaian_baru_dalam_setahun }}</td>
+                                <td>{{ rumah_tangga.jumlah_makan_dalam_sehari }}</td>
+                                <td>{{ rumah_tangga.mampu_membayar_biaya_pengobatan }}</td>
+                                <td>{{ rumah_tangga.sumber_air_minum }}</td>
+                                <td>{{ rumah_tangga.memiliki_simpanan_aset }}</td>
+                                <td>{{ rumah_tangga.status_rumah_tangga }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="mt-4">
+                <a href="{% url 'rumahtangga:exportData' %}?tahun={{ selected_year }}" class="btn btn-primary">Cetak
+                    Excel</a>
+            </div>
+            {% else %}
+            <p>Tidak ada data rumah tangga miskin untuk tahun yang dipilih.</p>
+            {% endif %}
+            {% else %}
+            <p>Pilih tahun untuk melihat data rumah tangga miskin.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock konten %}

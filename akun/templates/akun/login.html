@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="{% static 'dist/img/logo.png' %}"><b>APLIKASI KLASIFIKASI RUMAH TANGGA DESA RIGI</b> </a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Silahkan Login</p>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="{{ form.email.id_for_label }}">Username:</label>
+                            {{ form.email }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.password.id_for_label }}">Password:</label>
+                            {{ form.password }}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                </form>
+
+<!-- <p class="mb-0"><a href="#" class="text-center">Register a new membership</a></p> -->
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+
+    <!-- jQuery -->
+    <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+</body>
+
+{% endblock body %}

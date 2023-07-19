@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+
+{% block sidebar %}
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.name == 'Admin' %}
+                {% include 'sidebarAdmin.html' %}
+            {% elif group.name == 'Operator' %}
+                {% include 'sidebarOperator.html' %}
+            {% elif group.name == 'Penduduk' %}
+                {% include 'sidebarPenduduk.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock sidebar %}
+
+{% block kontenLink %}
+<li class="breadcrumb-item"><a href="{% url 'akun:index' %}">{{content_link}}</a></li>
+{% endblock kontenLink %}
+
+
+{% block konten %}
+<section class="content">
+    <div class="card">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show{% if message.tags %} {{ message.tags }}{% endif %}"
+            role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="btn-group">
+                        <a href="{% url 'akun:create' %}" class="btn btn-primary float-left"><i class="fas fa-folder-plus"></i>
+                            Tambah User</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-striped projects">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%">NO</th>
+                            <th style="width: 15%">LAST LOGIN</th>
+                            <th style="width: 15%">IS SUPERUSER</th>
+                            <th style="width: 15%">EMAIL</th>
+                            <th style="width: 15%">FIRST NAME</th>
+                            <th style="width: 15%">LAST NAME</th>
+                            <th style="width: 15%">IS ACTIVE</th>
+                            <th style="width: 15%">IS STAF</th>
+                            <th style="width: 15%">GRUP</th>
+                            <th style="width: 30%">AKSI</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in data_user %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ data.last_login }}</td>
+                            <td>{{ data.is_superuser }}</td>
+                            <td>{{ data.email }}</td>
+                            <td>{{ data.first_name }}</td>
+                            <td>{{ data.last_name }}</td>
+                            <td>{{ data.is_active }}</td>
+                            <td>{{ data.is_staff }}</td>
+                            <td>
+                                {% for group in data.groups.all %}
+                                    {{ group.name }}{% if not forloop.last %}, {% endif %}
+                                {% empty %}
+                                    No groups
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a class="btn btn-info btn-sm" href="{% url 'akun:editUser' edit_id=data.id%}">
+                                        <i class="fas fa-pencil-alt"></i> Edit
+                                    </a>
+                                    <!-- <a class="btn btn-warning btn-sm" href="{% url 'akun:detail' detail_id=data.id%}">
+                                        <i class="fas fa-folder"></i> View
+                                    </a> -->
+                                    <a class="btn btn-danger btn-sm" href="{% url 'akun:delete' delete_id=data.id%}">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </a>
+                                </div>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row mt-3">
+        <div class="col-12">
+
+
+
+            <!-- <div class="btn-group">
+                <a href="{% url 'akun:create_permission' %}" class="btn btn-primary float-left"><i
+                        class="fas fa-folder-plus"></i> Add Permission</a>
+            </div> -->
+
+        </div>
+    </div>
+</section>
+{% endblock konten %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+
+
+{% block sidebar %}
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.name == 'Admin' %}
+                {% include 'sidebarAdmin.html' %}
+            {% elif group.name == 'Operator' %}
+                {% include 'sidebarOperator.html' %}
+            {% elif group.name == 'Penduduk' %}
+                {% include 'sidebarPenduduk.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock sidebar %}
+
+
+{% block kontenLink %}
+<li class="breadcrumb-item"><a href="{% url 'rumahtangga:index' %}">{{content_link}}</a></li>
+{% endblock kontenLink %}
+
+{% block konten %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Edit Data Rumah Tangga</h3>
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            {% for field in form_edit_data %}
+                            <div class="form-group">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Kirim</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock konten %}

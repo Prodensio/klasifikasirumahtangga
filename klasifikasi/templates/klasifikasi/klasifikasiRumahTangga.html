@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+
+{% block sidebar %}
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.name == 'Admin' %}
+                {% include 'sidebarAdmin.html' %}
+            {% elif group.name == 'Operator' %}
+                {% include 'sidebarOperator.html' %}
+            {% elif group.name == 'Penduduk' %}
+                {% include 'sidebarPenduduk.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock sidebar %}
+
+
+{% block kontenLink %}
+<li class="breadcrumb-item"><a href="{% url 'klasifikasi:index' %}">{{content_link}}</a></li>
+{% endblock kontenLink %}
+
+{% block konten %}
+<section class="konten">
+    <h1 class="mb-4">Klasifikasi Rumah Tangga</h1>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">Akurasi Data Training</h2>
+            <p class="card-text">{{ akurasi_data_training }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">Laporan Klasifikasi Data Training</h2>
+            <pre class="card-text">{{ laporan_klasifikasi_data_train }}</pre>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">Akurasi Data Testing</h2>
+            <p class="card-text">{{ akurasi_data_testing }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">Laporan Klasifikasi Data Testing</h2>
+            <pre class="card-text">{{ laporan_klasifikasi_data_testing }}</pre>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">Prediksi</h2>
+            <ul class="list-group">
+                {% for pred in prediksi %}
+                <li class="list-group-item">{{ pred }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+
+{% endblock konten %}

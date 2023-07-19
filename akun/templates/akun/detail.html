@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+
+
+
+
+
+
+
+{% block sidebar %}
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.name == 'Admin' %}
+                {% include 'sidebarAdmin.html' %}
+            {% elif group.name == 'Operator' %}
+                {% include 'sidebarOperator.html' %}
+            {% elif group.name == 'Penduduk' %}
+                {% include 'sidebarPenduduk.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock sidebar %}
+
+{% block kontenLink %}
+<li class="breadcrumb-item"><a href="{% url 'akun:index' %}">{{content_link}}</a></li>
+{% endblock kontenLink %}
+
+{% block konten %}
+<!-- Main content -->
+<section class="content">
+    <div class="card">
+
+        
+        {% if user_detail %}
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Keterangan Akun</h5>
+                    <div class="btn-group">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <p>Email: {{ user_detail.email }}</p>
+            <p>First Name: {{ user_detail.first_name }}</p>
+            <p>Last Name: {{ user_detail.last_name }}</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+<!-- /.content -->
+{% endblock konten %}
+    

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.name == 'Admin' %}
+                {% include 'sidebarAdmin.html' %}
+            {% elif group.name == 'Operator' %}
+                {% include 'sidebarOperator.html' %}
+            {% elif group.name == 'Penduduk' %}
+                {% include 'sidebarPenduduk.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock sidebar %}
+
+
+{% block kontenLink %}
+<li class="breadcrumb-item"><a href="{% url 'rumahtangga:bantuan' %}">{{content_link}}</a></li>
+{% endblock kontenLink %}
+
+
+
+
+{% block konten %}
+<section class="content">
+    <!-- Default box -->
+    <div class="card">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show{% if message.tags %} {{ message.tags }}{% endif %}"
+            role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="card-header">
+            <h3 class="card-title">Form Tambah Data Bantuan Rumah Tangga</h3>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form_tambah_data_bantuan_rumah_tangga.as_p }}
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock konten %}

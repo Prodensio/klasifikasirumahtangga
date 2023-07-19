@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+
+
+
+
+
+{% block sidebar %}
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.name == 'Admin' %}
+                {% include 'sidebarAdmin.html' %}
+            {% elif group.name == 'Operator' %}
+                {% include 'sidebarOperator.html' %}
+            {% elif group.name == 'Penduduk' %}
+                {% include 'sidebarPenduduk.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock sidebar %}
+
+
+{% block kontenLink %}
+<li class="breadcrumb-item"><a href="{% url 'akun:index' %}">{{content_link}}</a></li>
+{% endblock kontenLink %}
+
+
+{% block konten %}
+
+<section class="content">
+    <div class="container-fluid">
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-success alert-dismissible fade show{% if message.tags %} {{ message.tags }}{% endif %}" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                            
+                        
+                        <h3 class="card-title">Create User</h3>
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="{{ form.email.id_for_label }}">Email:</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.first_name.id_for_label }}">First_name:</label>
+                                {{ form.first_name }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.last_name.id_for_label }}">Last_name:</label>
+                                {{ form.last_name }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.password1.id_for_label }}">Password:</label>
+                                {{ form.password1 }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.password2.id_for_label }}">Password confirmation:</label>
+                                {{ form.password2 }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.groups.id_for_label }}">Groups:</label>
+                                {{ form.groups }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.is_active.id_for_label }}">Is Active:</label>
+                                {{ form.is_active }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.is_staff.id_for_label }}">Is Staff:</label>
+                                {{ form.is_staff }}
+                            </div>
+                            
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock konten %}

@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}
+    {% if user_groups %}
+        {% for group in user_groups %}
+            {% if group.name == 'Admin' %}
+                {% include 'sidebarAdmin.html' %}
+            {% elif group.name == 'Operator' %}
+                {% include 'sidebarOperator.html' %}
+            {% elif group.name == 'Penduduk' %}
+                {% include 'sidebarPenduduk.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock sidebar %}
+
+
+{% block kontenLink %}
+<li class="breadcrumb-item"><a href="{% url 'survey:index' %}">{{content_link}}</a></li>
+{% endblock kontenLink %}
+
+{% block konten %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Survei Penduduk</h3>
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="{{ form_tambah_data_survey_penduduk.dusun.id_for_label }}">DUSUN</label>
+                                {{ form_tambah_data_survey_penduduk.dusun }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form_tambah_data_survey_penduduk.rt.id_for_label }}">RT</label>
+                                {{ form_tambah_data_survey_penduduk.rt }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form_tambah_data_survey_penduduk.no_rumah_tangga.id_for_label }}">NO
+                                    RUMAH TANGGA</label>
+                                {{ form_tambah_data_survey_penduduk.no_rumah_tangga }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form_tambah_data_survey_penduduk.no_kartu_keluarga.id_for_label }}">NO
+                                    KARTU KELUARGA</label>
+                                {{ form_tambah_data_survey_penduduk.no_kartu_keluarga }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_tambah_data_survey_penduduk.no_induk_kependudukan.id_for_label }}">NIK</label>
+                                {{ form_tambah_data_survey_penduduk.no_induk_kependudukan }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form_tambah_data_survey_penduduk.nama_penduduk.id_for_label }}">NAMA
+                                    PENDUDUK</label>
+                                {{ form_tambah_data_survey_penduduk.nama_penduduk}}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form_tambah_data_survey_penduduk.jenis_kelamin.id_for_label }}">JENIS
+                                    KELAMIN</label>
+                                {{ form_tambah_data_survey_penduduk.jenis_kelamin }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form_tambah_data_survey_penduduk.tempat_lahir.id_for_label }}">TEMPAT
+                                    LAHIR</label>
+                                {{ form_tambah_data_survey_penduduk.tempat_lahir }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form_tambah_data_survey_penduduk.tanggal_lahir.id_for_label }}">TANGGAL
+                                    LAHIR</label>
+                                {{ form_tambah_data_survey_penduduk.tanggal_lahir }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form_tambah_data_survey_penduduk.alamat.id_for_label }}">ALAMAT</label>
+                                {{ form_tambah_data_survey_penduduk.alamat }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_tambah_data_survey_penduduk.status_pernikahan.id_for_label }}">STATUS
+                                    PERNIKAHAN</label>
+                                {{ form_tambah_data_survey_penduduk.status_pernikahan }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form_tambah_data_survey_penduduk.agama.id_for_label }}">Agama</label>
+                                {{ form_tambah_data_survey_penduduk.agama }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form_tambah_data_survey_penduduk.no_hp.id_for_label }}">NO HP</label>
+                                {{ form_tambah_data_survey_penduduk.no_hp }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_tambah_data_survey_penduduk.pekerjaan.id_for_label }}">PEKERJAAN</label>
+                                {{ form_tambah_data_survey_penduduk.pekerjaan }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_tambah_data_survey_penduduk.penghasilan.id_for_label }}">PENGHASILAN</label>
+                                {{ form_tambah_data_survey_penduduk.penghasilan }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_tambah_data_survey_penduduk.pendidikan.id_for_label }}">PENDIDIKAN</label>
+                                {{ form_tambah_data_survey_penduduk.pendidikan }}
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="{{ form_tambah_data_survey_penduduk.hubungan_dalam_rumah_tangga.id_for_label }}">HUBUNGAN
+                                    DALAM KELUARGA</label>
+                                {{ form_tambah_data_survey_penduduk.hubungan_dalam_keluarga }}
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Kirim</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock konten %}
